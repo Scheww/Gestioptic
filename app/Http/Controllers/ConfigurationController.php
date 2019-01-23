@@ -14,8 +14,9 @@ use App\Optic;
 use App\ProductType;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
-class ConfigurationController
+class ConfigurationController extends Controller
 {
     /**
      * Show the application dashboard.
@@ -59,7 +60,9 @@ class ConfigurationController
      */
     public function brandIndex(Request $request)
     {
-        $brands = Brand::where('optic_id', $request->user->optic_id)->get();
+        $brands = Brand::where('optic_id', $request->user->optic_id)
+            ->where('name', 'like', '%'.$request->input('s').'%')
+            ->get();
 
         return view('configuration._brand-index', ['brands' => $brands]);
 
@@ -145,7 +148,9 @@ class ConfigurationController
      */
     public function typeIndex(Request $request)
     {
-        $types = ProductType::where('optic_id', $request->user->optic_id)->get();
+        $types = ProductType::where('optic_id', $request->user->optic_id)
+            ->where('name', 'like', '%'.$request->input('s').'%')
+            ->get();
 
         return view('configuration._type-index', ['types' => $types]);
 
@@ -231,7 +236,9 @@ class ConfigurationController
      */
     public function userIndex(Request $request)
     {
-        $user_configs = User::where('optic_id', $request->user->optic_id)->get();
+        $user_configs = User::where('optic_id', $request->user->optic_id)
+            ->where('name', 'like', '%'.$request->input('s').'%')
+            ->get();
 
         return view('configuration._user-index', ['users_config' => $user_configs]);
     }
@@ -256,7 +263,7 @@ class ConfigurationController
         $user_config = new User();
         $user_config->fill($request->all());
         $user_config->optic_id = $request->user->optic_id;
-        $user_config->password = '123456';
+        $user_config->password = Hash::make($request->input('password'));
 
         try {
             $user_config->save();

@@ -47,4 +47,17 @@
             </div>
         </div> <!-- section content end -->
     </div>
+    <script>
+        $(document).ready(function () {
+            $('#validationForm').submit(function() {
+                 if($.trim($('input[name="name"]').val()) === "") {
+                    alert('Debes completar el nombre');
+                    return false;
+                }else if ($('input[name="name"]').val().length > 189) {
+                     alert('El name debe ser mas pequeño');
+                     return false;
+                 }
+            });
+        });
+    </script>
 @endsection

@@ -27,7 +27,8 @@ class ProductController extends Controller
         $products = Product::with('brand','productType')
             ->whereHas('brand', function ($q) use($request){
                 $q->where('optic_id', $request->user->id);
-        })->get();
+        })->where('name', 'like', '%'.$request->input('s').'%')
+            ->get();
 
         return view('products.index', ['products' => $products ]);
     }
@@ -41,7 +42,7 @@ class ProductController extends Controller
     {
         $products = Product::with('brand','productType')
             ->where('stock','>', 0)
-            ->whereHas('brand', function ($q) use($request) {
+            ->whereHas('brand', function ($q) use($request,$query) {
                 $q->where('optic_id', $request->user->id);
             })
             ->where('name', 'like', '%'.$query.'%')->get();
@@ -136,7 +137,7 @@ class ProductController extends Controller
             return 'error';
         }
 
-        return view('products.index',  $product);
+        return redirect(route('product-index'));
     }
 
     /**
@@ -157,6 +158,6 @@ class ProductController extends Controller
             return 'error';
         }
 
-        return view('products.index',  $product);
+        return redirect(route('product-index'));
     }
 }

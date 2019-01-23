@@ -32,7 +32,7 @@
                                         <label class="control-label">
                                             Nombre*
                                         </label>
-                                        <input type="text" @if(!empty($product)) value="{{$product->name}}" @endif name="name" class="form-control">
+                                        <input type="text" @if(!empty($product)) value="{{$product->name}}" @endif  name="name" class="form-control">
                                     </div>
                                 </div>
                             </div>
@@ -42,7 +42,7 @@
                                         <label class="control-label">
                                             Code
                                         </label>
-                                        <input type="text" @if(!empty($product->code)) value="{{$product->code}}" @endif name="code" class="form-control">
+                                        <input type="text" @if(!empty($product->code)) value="{{$product->code}}"  @endif name="code" class="form-control">
                                     </div>
                                 </div>
                             </div>
@@ -52,7 +52,7 @@
                                         <label class="control-label">
                                             Stock
                                         </label>
-                                        <input type="number" name="stock" @if(!empty($product->stock)) value="{{$product->stock}}" @endif class="form-control">
+                                        <input type="number" name="stock" @if(!empty($product->stock)) value="{{$product->stock}}"  @endif class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -69,7 +69,7 @@
                                         <label class="control-label">
                                             Precio de compra
                                         </label>
-                                        <input type="number" name="buy_price" @if(!empty($product->buy_price)) value="{{$product->buy_price}}" @endif class="form-control">
+                                        <input type="number" name="buy_price" @if(!empty($product->buy_price)) value="{{$product->buy_price}}" required="required" @endif class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -85,7 +85,7 @@
                                 <label>Marca</label>
                                 <select class="select-simple form-control pmd-select2" name="brand_id">
                                     @foreach($brands as $brand)
-                                        <option value="{{$brand->id}}">{{$brand->name}}</option>
+                                        <option value="{{$brand->id}}" @if(!empty($product) && ($product->brand_id == $brand->id)) selected @endif>{{$brand->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -93,7 +93,7 @@
                                 <label>Tipo de producto</label>
                                 <select class="select-simple form-control pmd-select2" name="type_id">
                                     @foreach($types as $type)
-                                        <option value="{{$type->id}}">{{$type->name}}</option>
+                                        <option value="{{$type->id}}" @if(!empty($product) && ($product->type_id == $type->id)) selected @endif>{{$type->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -117,4 +117,44 @@
             </div>
         </div> <!-- section content end -->
     </div>
+    <script>
+        $(document).ready(function () {
+            $('#validationForm').submit(function() {
+               if($.trim($('input[name="name"]').val()) === "") {
+                    alert('Debes completar el nombre');
+                    return false;
+                }else if ($('input[name="name"]').val().length > 189) {
+                   alert('El nombre debe ser mas pequeño');
+                    return false;
+               }else if($.trim($('input[name="code"]').val()) === "") {
+                   alert('Debes completar el codigo');
+                    return false;
+                }else if ($('input[name="code"]').val().length > 189) {
+                   alert('El codigo debe ser mas pequeño');
+                    return false;
+               }else if($.trim($('input[name="buy_price"]').val()) === "" || $('input[name="buy_price"]').val() < 1) {
+                   alert('Debes completar el precio de compra');
+                   return false;
+               }else  if ($('input[name="buy_price"]').val().length > 10) {
+                   alert('El precio de venta debe ser mas chico');
+                   return false;
+               } else if($.trim($('input[name="sell_price"]').val()) === "" || $('input[name="sell_price"]').val() < 1) {
+                   alert('Debes completar el precio de venta');
+                   return false;
+               }else if ($('input[name="sell_price"]').val().length > 10) {
+                   alert('El precio de compra debe ser mas chico');
+                    return false;
+               }else if ($('input[name="stock"]').val().length > 10) {
+                   alert('El stock debe ser mas chico');
+                   return false;
+               }else if ($.trim($('input[name="stock"]').val()) === "") {
+                   alert('debe cargar el stock');
+                   return false;
+               } else if($('input[name="sell_price"]').val() <= $('input[name="buy_price"]').val()) {
+                   alert('Los precios de venta deben ser mayores a los precios de compra');
+                   return false;
+               }
+            });
+        });
+    </script>
 @endsection

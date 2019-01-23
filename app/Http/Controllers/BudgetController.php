@@ -25,7 +25,12 @@ class BudgetController extends Controller
      */
     public function index(Request $request)
     {
-        $budgets = Budget::with('client', 'optic')->where('optic_id', $request->user->optic_id)->orderBy('created_at')->get();
+        $budgets = Budget::with('client', 'optic')
+            ->where('optic_id', $request->user->optic_id)
+            ->whereHas('client', function ($q) use($request) {
+                $q->where('name', 'like', '%' . $request->input('s') . '%');
+                    })->orderBy('created_at')
+            ->get();
 
         foreach ($budgets as $budget) {
             switch ($budget->payment_form){

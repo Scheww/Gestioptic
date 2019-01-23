@@ -44,6 +44,16 @@
                                         <input type="email" name="email" id="regular1" @if(!empty($user_config->email)) value="{{$user_config->email}}" @endif class="form-control">
                                     </div>
                                 </div>
+                                @if(empty($user_config))
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                                        <label for="regular1" class="control-label">
+                                            Contraseña*
+                                        </label>
+                                        <input type="password" name="password" id="regular1" class="form-control">
+                                    </div>
+                                </div>
+                                @endif
                             </div>
                             <div class="pmd-card-actions">
                                 <button  user="submit" class="btn btn-primary next">Guardar</button>
@@ -55,4 +65,23 @@
             </div>
         </div> <!-- section content end -->
     </div>
+    <script>
+        $(document).ready(function () {
+            $('#validationForm').submit(function() {
+                if ($.trim($('input[type="email"]').val()) === "" ) {
+                    alert('Debes completar el email');
+                    return false;
+                }else if ($('input[name="email"]').val().length > 189) {
+                    alert('El Email debe ser mas pequeño');
+                    return false;
+                }else if($.trim($('input[name="name"]').val()) === "") {
+                    alert('Debes completar el nombre');
+                    return false;
+                }else if ($('input[name="name"]').val().length > 189) {
+                    alert('El name debe ser mas pequeño');
+                    return false;
+                }
+            });
+        });
+    </script>
 @endsection

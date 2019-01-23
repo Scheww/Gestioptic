@@ -19,7 +19,7 @@ class Client extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'address','phone','email'
+        'name', 'address','phone','email','id_number'
     ];
 
     public function optic()

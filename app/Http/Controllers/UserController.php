@@ -21,7 +21,7 @@ class UserController extends Controller
      */
     public function updateUser(Request $request)
     {
-        return view('user-form');
+        return view('user.form');
     }
 
 }

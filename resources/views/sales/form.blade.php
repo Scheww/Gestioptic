@@ -1,7 +1,17 @@
 @extends('layouts.app')
 @section('content')
     <div id="content" class="pmd-content inner-page">
-
+        <style>
+            .search-item {
+                padding: 15px;
+                color: #827e7e;
+                font-weight: 600;
+                float: left;
+                position: relative;
+                cursor: pointer;
+                width: 100%;
+            }
+        </style>
         <!--tab start-->
         <div class="container-fluid full-width-container">
 
@@ -78,7 +88,12 @@
                         <div class="products col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div class="search-product" style="position: relative;width: 90%;margin: 10px 5%">
                                 <input type="text" id="query" name="search" autocomplete="off" placeholder="Busque sus productos aqui" class="form-control">
-                                <div class="search-autocomplete" style="-webkit-box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.75);-moz-box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.75);box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.75);">
+                                <div class="search-autocomplete" style="width: 100%;-webkit-box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.75);-moz-box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.75);box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.75);  position: absolute;
+            background-color: white;
+            max-height: 150px;
+            overflow: hidden;
+            overflow-y: auto;
+            z-index: 5;">
                                     <div class="search-autocomplete-all">
 
                                     </div>
@@ -112,6 +127,42 @@
     <script>
 
         $( document ).ready(function() {
+            $('#validationForm').submit(function() {
+                if ($.trim($('input[type="email"]').val()) === "" ) {
+                    alert('Debes completar el email');
+                    return false;
+                }else if ($('input[name="email"]').val().length > 189) {
+                    alert('El Email debe ser mas pequeño');
+                    return false;
+                }else if($.trim($('input[name="name"]').val()) === "") {
+                    alert('Debes completar el nombre');
+                    return false;
+                }else if ($('input[name="name"]').val().length > 189) {
+                    alert('El nombre debe ser mas pequeño');
+                    return false;
+                }else if($.trim($('input[name="phone"]').val()) === "") {
+                    alert('Debes completar el telefono');
+                    return false;
+                }else if ($('input[name="phone"]').val().length > 20) {
+                    alert('El telefono debe ser mas pequeño');
+                    return false;
+                }else if ($('input[name="amount"]').val() <= 0 || $('input[name="amount"]').val() == '') {
+                    alert('El total debe ser mayor a 0');
+                    return false;
+                }else if ($('input[name="amount"]').val().length > 10 ) {
+                        alert('El total no puede ser tan grande');
+                        return false;
+                }else if ($('.item-list').find('.item').length < 1) {
+                    alert('Debe agregar un Producto a su factura');
+                    return false;
+                }
+            });
+
+            $("body").click(function () {
+                $('#query').val('');
+                $('.search-autocomplete-all').empty();
+            })
+
             $('input[name="search"]').keyup(function (e) {
 
                 if($(this).val().length > 2){
@@ -214,7 +265,7 @@
                         for (var i = 0; i < products_data.length; i++) {
                             products_data[i].name = products_data[i].name.replace(/'/g, "\\'");
                             products_data[i].name = products_data[i].name.replace(',', " ");
-                            searchAutocompleteAll.innerHTML = searchAutocompleteAll.innerHTML + '<a onclick="addItem('+products_data[i].id+')" class="search-item">'+products_data[i].name+'</a>';
+                            searchAutocompleteAll.innerHTML = searchAutocompleteAll.innerHTML + '<a onclick="addItem('+products_data[i].id+')" class="search-item"><span>'+products_data[i].name+'</span></a>';
                         }
                     })
                 }
@@ -241,6 +292,8 @@
             var e = jQuery.Event("keydown");
             e.which = 27; // # Some key code value
             $('#search').trigger(e);
+            $('#query').val('');
+            $('.search-autocomplete-all').empty();
 
             $.ajax({
                 type: 'GET',
@@ -268,5 +321,7 @@
 
             $(item).parents('.item').remove();
         }
+
+
     </script>
 @endsection

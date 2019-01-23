@@ -38,7 +38,7 @@
                                         <label for="regular1" class="control-label">
                                             Telefono*
                                         </label>
-                                        <input type="number" step=".01" name="phone" id="regular1" @if(!empty($recipe->client->phone)) value="{{$recipe->client->phone}}" @endif class="form-control">
+                                        <input type="number" step="1" name="phone" id="regular1" @if(!empty($recipe->client->phone)) value="{{$recipe->client->phone}}" @endif class="form-control">
                                     </div>
                                 </div>
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -55,7 +55,7 @@
                                         <label for="regular1" class="control-label">
                                             DNI/CUIT
                                         </label>
-                                        <input type="text" name="address" @if(!empty($recipe->client->id_number)) value="{{$recipe->client->id_number}}" @endif class="form-control">
+                                        <input type="text" name="id_number" @if(!empty($recipe->client->id_number)) value="{{$recipe->client->id_number}}" @endif class="form-control">
                                     </div>
                                 </div>
 
@@ -303,7 +303,7 @@
                                     <label for="regular1" class="control-label">
                                         Observaciones
                                     </label>
-                                    <textarea name="Observaciones" class="form-control">@if(!empty($recipe)) value="{{$recipe->observations}}" @endif  </textarea>
+                                    <textarea name="Observaciones" class="form-control">@if(!empty($recipe)){{$recipe->observations}} @endif</textarea>
                                 </div>
                             </div>
                         </div>
@@ -311,7 +311,7 @@
 
                     <div class="pmd-card-actions">
                         <button  type="submit" class="btn btn-primary next">Guardar</button>
-                        <a href="{{route('optic-index')}}" class="btn btn-default">Cancelar</a>
+                        <a href="{{route('recipe-index')}}" class="btn btn-default">Cancelar</a>
                     </div>
                  <!-- section content end -->
                     </div>
@@ -319,4 +319,35 @@
             </div>
         </div> <!-- section content end -->
     </div>
+    <script>
+        $(document).ready(function () {
+            $('#validationForm').submit(function() {
+                if ($.trim($('input[type="email"]').val()) === "" ) {
+                    alert('Debes completar el email');
+                    return false;
+                }else if($.trim($('input[name="name"]').val()) === "") {
+                    alert('Debes completar el nombre');
+                    return false;
+                }else if($.trim($('input[name="phone"]').val()) === "") {
+                    alert('Debes completar el telefono');
+                    return false;
+                }else if ($('input[name="name"]').val().length > 189) {
+                    alert('El nombre debe ser mas chico');
+                    return false;
+                }else if ($('input[name="email"]').val().length > 189) {
+                    alert('El email debe ser mas chico');
+                return false;
+                }else if ($('input[name="phone"]').val().length > 20) {
+                    alert('El telefono debe ser mas chico');
+                return false;
+                }else if ($('input[name="address"]').val().length > 189) {
+                    alert('El telefono debe ser mas chico');
+                    return false;
+                }else if ($('input[name="id_number"]').val().length > 20) {
+                    alert('El DNI debe ser mas chico');
+                    return false;
+                }
+            });
+        });
+    </script>
 @endsection

@@ -83,4 +83,26 @@
             </div>
         </div> <!-- section content end -->
     </div>
+    <script>
+        $(document).ready(function () {
+            $('#validationForm').submit(function() {
+                if ($.trim($('input[type="email"]').val()) === "" ) {
+                    alert('Debes completar el email');
+                    return false;
+                }else if ($('input[name="email"]').val().length > 189 ) {
+                    alert('El email debe ser mas corto');
+                    return false;
+                }else if($.trim($('input[name="name"]').val()) === "") {
+                    alert('Debes completar el nombre');
+                    return false;
+                }else if($.trim($('input[name="phone"]').val()) === "") {
+                    alert('Debes completar el telefono');
+                    return false;
+                }else if ($('input[name="name"]').val().length > 189 ) {
+                    alert('El nombre debe ser mas corto');
+                    return false;
+                }
+            });
+        });
+    </script>
 @endsection

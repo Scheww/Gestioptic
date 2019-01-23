@@ -11,7 +11,10 @@ namespace App\Http\Controllers;
 
 use App\Client;
 use App\Recipe;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Mockery\Exception;
 
 class RecipeController extends Controller
 {
@@ -24,11 +27,36 @@ class RecipeController extends Controller
     {
         if (!empty($request->user->optic_id)) {
             $optic_id = $request->user->optic_id;
-            $recipe = Recipe::with('client')->whereHas('client', function ($q) use ($optic_id) {
-                $q->where('clients.optic_id', $optic_id);
-            })->get();
+            try {
+            $recipe = Recipe::with('client')
+                ->whereHas('client', function ($q) use ($optic_id, $request) {
+                    $q->where('clients.optic_id', $optic_id)
+                        ->where('clients.name', 'like', '%'.$request->input('s').'%');
+            })
+            ->get();
+            } catch (QueryException $e) {
+                echo 'Caught exception: ',  $e->getMessage(), "\n";
+                $recipe = '';
+            } catch (\PDOException $e) {
+                echo 'Caught exception: ',  $e->getMessage(), "\n";
+                $recipe = '';
+            }
+
         }else{
-            $recipe = Recipe::with('client')->all();
+            try {
+            $recipe = Recipe::with('client')
+                ->whereHas('client', function ($q) use ($request) {
+                    $q->where('clients.name', 'like', '%'.$request->input('s').'%');
+                })
+                    ->where('observations', 'like', '%'.$request->input('s').'%')
+                ->all();
+            } catch (QueryException $e) {
+                echo 'Caught exception: ',  $e->getMessage(), "\n";
+                $recipe = '';
+            } catch (\PDOException $e) {
+                echo 'Caught exception: ',  $e->getMessage(), "\n";
+                $recipe = '';
+            }
         }
 
         return view('recipes.index', ['recipes' => $recipe]);
@@ -63,7 +91,6 @@ class RecipeController extends Controller
         $recipe = new Recipe();
         $recipe->fill($request->all());
         $recipe->client_id = $client->id;
-        $recipe->user_id = $request->user->id;
 
         $recipe->save();
 
@@ -81,7 +108,7 @@ class RecipeController extends Controller
         if (!$recipe) {
             return view('recipe.index');
         }
-        return view('recipe.form', ['recipe' => $recipe]);
+        return view('recipes.form', ['recipe' => $recipe]);
     }
 
     /**
@@ -103,7 +130,7 @@ class RecipeController extends Controller
             return 'error';
         }
 
-        return view('recipe.index',  $recipe);
+        return redirect(route('recipe-index'));
     }
 
     /**
@@ -124,6 +151,6 @@ class RecipeController extends Controller
             return 'error';
         }
 
-        return view('recipe.index',  $recipe);
+        return redirect(route('recipe-index'));
     }
 }

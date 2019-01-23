@@ -22,7 +22,9 @@ class BrandController extends Controller
      */
     public function index(Request $request)
     {
-        $brand = Brand::where('optic_id', $request->input('optic_id'))->get();
+        $brand = Brand::where('optic_id', $request->input('optic_id'))
+            ->where('name', 'like', '%'.$request->input('s').'%')
+            ->get();
 
         return view('index', $brand);
     }
