@@ -50,7 +50,7 @@
                                                 </form>
                                                 <a style="cursor: pointer" onclick="deleteEntity('#delete-form-{{$type->id}}')"><i class="material-icons md-dark pmd-sm">delete</i></a>
                                             </td>
-                                            <td><a href="{{route('config-type-update', $type->id)}}"><i class="material-icons md-dark pmd-sm">more_vert</i></a></td>
+                                            <td><a href="{{route('config-type-update', $type->id)}}"><i class="material-icons md-dark pmd-sm">edit</i></a></td>
                                         </tr>
                                     @endforeach
                                 @else

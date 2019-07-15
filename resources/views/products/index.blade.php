@@ -52,7 +52,7 @@
                                             <td>{{$product->stock}}</td>
                                             <td>{{$product->buy_price}}</td>
                                             <td>{{$product->sell_price}}</td>
-                                            <td><a href="{{route('product-update', $product->id)}}"><i class="material-icons md-dark pmd-sm">more_vert</i></a></td>
+                                            <td><a href="{{route('product-update', $product->id)}}"><i class="material-icons md-dark pmd-sm">edit</i></a></td>
                                         </tr>
                                     @endforeach
                                 @else

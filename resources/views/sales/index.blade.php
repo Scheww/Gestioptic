@@ -48,7 +48,7 @@
                                             <td>{{$budget->payment_form}}</td>
                                             <td>{{$budget->created_at}}</td>
                                             <td>{{$budget->amount}}</td>
-                                            <td><a href="{{route('sales-update', $budget->id)}}"><!--<i class="material-icons md-dark pmd-sm">more_vert</i>--></a></td>
+                                            <td><a href="{{route('sales-update', $budget->id)}}"><!--<i class="material-icons md-dark pmd-sm">edit</i>--></a></td>
                                         </tr>
                                     @endforeach
                                 @else

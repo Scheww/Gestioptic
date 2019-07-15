@@ -59,7 +59,7 @@
         <!-- Navbar Right icon -->
         <div class="pmd-navbar-right-icon pull-right">
             <a href="javascript:void(0);" class="btn btn-sm pmd-btn-fab pmd-btn-flat pmd-ripple-effect"><i class="material-icons pmd-sm md-light">search</i></a>
-            <a href="javascript:void(0);" class="btn btn-sm pmd-btn-fab pmd-btn-flat pmd-ripple-effect topbar-toggle visible-xs-inline-block" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"><i class="material-icons pmd-sm">more_vert</i></a>
+            <a href="javascript:void(0);" class="btn btn-sm pmd-btn-fab pmd-btn-flat pmd-ripple-effect topbar-toggle visible-xs-inline-block" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"><i class="material-icons pmd-sm">edit</i></a>
         </div>
         <!-- /.navbar-collapse -->
     </div>
@@ -76,7 +76,7 @@
                         <img width="40" height="40" alt="avatar" src="http://propeller.in/assets/images/avatar-icon-40x40.png">
                     </div>
                     <div class="media-body media-middle">D,Material Admin</div>
-                    <div class="media-right media-middle"><i class="material-icons pmd-sm">more_vert</i></div>
+                    <div class="media-right media-middle"><i class="material-icons pmd-sm">edit</i></div>
                 </a>
                 <ul class="dropdown-menu">
                     <li> <a class="pmd-ripple-effect" href="javascript:void(0);" tabindex="-1"><i class="material-icons media-left media-middle">person</i> <span class="media-body">View Profile</span></a></li>

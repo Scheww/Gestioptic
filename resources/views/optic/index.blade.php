@@ -41,7 +41,7 @@
                                             <td>{{$optic->city}}</td>
                                             <td>{{$optic->phone}}</td>
                                             <td>{{$optic->created_at}}</td>
-                                            <td><a href="{{route('optic-update', $optic->id)}}"><i class="material-icons md-dark pmd-sm">more_vert</i></a></td>
+                                            <td><a href="{{route('optic-update', $optic->id)}}"><i class="material-icons md-dark pmd-sm">edit</i></a></td>
                                         </tr>
                                     @endforeach
                                 @else

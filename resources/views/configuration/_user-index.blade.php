@@ -52,7 +52,7 @@
                                                 </form>
                                                 <a onclick="deleteEntity('#delete-form-{{$user_config->id}}')"><i class="material-icons md-dark pmd-sm">delete</i></a>
                                             </td>
-                                            <td><a href="{{route('config-user-update', $user_config->id)}}"><i class="material-icons md-dark pmd-sm">more_vert</i></a></td>
+                                            <td><a href="{{route('config-user-update', $user_config->id)}}"><i class="material-icons md-dark pmd-sm">edit</i></a></td>
                                         </tr>
                                     @endforeach
                                 @else

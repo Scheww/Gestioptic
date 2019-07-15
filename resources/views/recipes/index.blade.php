@@ -46,7 +46,7 @@
                                             <td>{{$recipe->client->name}}</td>
                                             <td>{{$recipe->created_at}}</td>
                                             <td>Activo</td>
-                                            <td><a href="{{route('recipe-update', $recipe->id)}}"><i class="material-icons md-dark pmd-sm">more_vert</i></a></td>
+                                            <td><a href="{{route('recipe-update', $recipe->id)}}"><i class="material-icons md-dark pmd-sm">edit</i></a></td>
                                         </tr>
                                     @endforeach
                                 @else
